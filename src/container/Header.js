@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function Header(props) {
     return (
@@ -12,7 +13,8 @@ function Header(props) {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav">
                             <li className="nav-item active">
-                                <a className="nav-link" href="index.html">Home <span className="sr-only">(current)</span></a>
+                                {/* <a className="nav-link" href="index.html">Home <span className="sr-only">(current)</span></a> */}
+                                <NavLink className="nav-link" to={"/"} active> Home </NavLink>
                             </li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span className="nav-label">Pages <span className="caret" /></span></a>

@@ -31,6 +31,12 @@ function Header(props) {
                                 <NavLink className="nav-link" to={"/blog"}>Blog</NavLink>
                             </li>
                             <li className="nav-item">
+                                <NavLink className="nav-link" to={"/login"}>Login</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to={"/data"}>Data</NavLink>
+                            </li>
+                            <li className="nav-item">
                                 <NavLink className="nav-link" to={"/contact"}>Contact</NavLink>
                             </li>
                             <li className="nav-item">

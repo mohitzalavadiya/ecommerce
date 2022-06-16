@@ -8,6 +8,8 @@ import Blog from './container/department/Blog';
 import Contact from './container/department/Contact';
 import Product from './container/department/Product';
 import Testimonial from './container/department/Testimonial';
+import Login from './container/department/Login';
+import Data from './container/data/Data';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
       <Route path="/contact" exact component={Contact}/>
       <Route path="/product" exact component={Product}/>
       <Route path="/testimonial" exact component={Testimonial}/>
+      <Route path="/login" exact component={Login}/>
+      <Route path="/data" exact component={Data}/>
 
       </Switch>
     <Footer/>

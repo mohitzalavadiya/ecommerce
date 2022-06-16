@@ -1,13 +1,13 @@
 import './App.css';
-import Header from './container/Header';
-import Home from './component/home/Home';
-import Footer from './container/Footer';
+import Header from './component/Header';
+import Home from './container/home/Home';
+import Footer from './component/Footer';
 import { Route, Switch } from 'react-router-dom';
-import About from './component/department/About';
-import Blog from './component/department/Blog';
-import Contact from './component/department/Contact';
-import Product from './component/department/Product';
-import Testimonial from './component/department/Testimonial';
+import About from './container/department/About';
+import Blog from './container/department/Blog';
+import Contact from './container/department/Contact';
+import Product from './container/department/Product';
+import Testimonial from './container/department/Testimonial';
 
 function App() {
   return (

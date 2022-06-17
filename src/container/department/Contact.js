@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 function Contact(props) {
+
+    const RefName = useRef()
+    const Refemail = useRef()
+    const Refsubject = useRef()
+
+    const Refexample = () => {
+        console.log(RefName.current.value);
+        Refemail.current.style.background = 'red';
+        Refsubject.current.focus();
+    }
     return (
         <div>
             <section className="inner_page_head">
@@ -21,11 +31,11 @@ function Contact(props) {
                             <div className="full">
                                 <form action="index.html">
                                     <fieldset>
-                                        <input type="text" placeholder="Enter your full name" name="name" required />
-                                        <input type="email" placeholder="Enter your email address" name="email" required />
-                                        <input type="text" placeholder="Enter subject" name="subject" required />
+                                        <input ref={RefName} type="text" placeholder="Enter your full name" name="name" required />
+                                        <input ref={Refemail} type="email" placeholder="Enter your email address" name="email" required />
+                                        <input ref={Refsubject} type="text" placeholder="Enter subject" name="subject" required />
                                         <textarea placeholder="Enter your message" required defaultValue={""} />
-                                        <input type="submit" defaultValue="Submit" />
+                                        <input type="submit" defaultValue="Submit" onClick={() => {Refexample()}} />
                                     </fieldset>
                                 </form>
                             </div>

@@ -1,10 +1,29 @@
 import React, { useRef, useState } from 'react';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
+import * as yup from 'yup';
+import { Formik, useFormik, Form } from 'formik';
 
 function Login(props) {
 
     const [login, setLogin] =useState("Login")
     const [reset, setReset] = useState(false)
+
+    let schema = yup.object().shape({
+      email: yup.string().required("please enter your email").email("please enter valid email"),
+      password: yup.string().min(6, "your password to short").required("plaese enter password"),
+    });
+
+      const formikobj = useFormik({
+        initialValues: {
+          email: '',
+          password: ''
+        },
+        validationSchema : schema,
+        onSubmit: values => {
+          alert(JSON.stringify(values, null, 2));
+        },
+      });
+
+      const{ handleChange, handleSubmit, errors} = formikobj
 
 
     return (
@@ -30,7 +49,8 @@ function Login(props) {
                     }
                    
                   </div>
-                  <form>
+                  <Formik values={formikobj}>
+                  <Form onSubmit={handleSubmit}>
                     {
                         reset ?
                         null
@@ -39,25 +59,27 @@ function Login(props) {
                         null 
                         :
                         <div className="form-outline mb-4">
-                      <input  type="name" id="form2Example11" className="form-control" placeholder=" Name" />
+                      <input  type="name" id="form2Example11" className="form-control" name='name' placeholder=" Name" />
                     </div>
                     }
-                    {
-                        reset ?
-                        <div className="form-outline mb-4">
-                      <input  type="email" id="form2Example11" className="form-control" placeholder=" email address" />
-                    </div>
-                    :
-                    <>
                     
-                    <div className="form-outline mb-4">
-                    <input type="email" id="form2Example11" className="form-control" placeholder=" email address" />
-                  </div>
-                  <div className="form-outline mb-4">
-                    <input type="password" id="form2Example22" className="form-control" placeholder="password" />
-                  </div>
-                  </>
+                       
+                        <div className="form-outline mb-4">
+                      <input  type="email" id="form2Example11" name='email' className="form-control" onChange={handleChange} placeholder=" email address" />
+                    </div>
+                    <p style={{color:'red'}}>{errors.email}</p>
+                    
+                  
+                    {
+                      reset ?
+                      null
+                      :
+                      <div className="form-outline mb-4">
+                      <input type="password" id="form2Example22" className="form-control" name='password' onChange={handleChange} placeholder="password" />
+                      <p  style={{color:'red'}}>{errors.password}</p>
+                    </div>
                     }
+                   
                     
                     {
                         reset ?
@@ -67,7 +89,7 @@ function Login(props) {
                     :
                         login === "Login" ?
                         <div className="text-center pt-1 pb-1">
-                      <button  className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">login</button>
+                      <button  className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">login</button>
                     </div>
                     :
                     <div className="text-center pt-1 pb-1">
@@ -90,7 +112,9 @@ function Login(props) {
                     </div>
                     }
                     
-                  </form>
+                  </Form>
+                 </Formik>
+                  
                 </div>
               </div>
             </div>

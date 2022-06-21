@@ -7,23 +7,41 @@ function Login(props) {
     const [login, setLogin] =useState("Login")
     const [reset, setReset] = useState(false)
 
-    let schema = yup.object().shape({
-      email: yup.string().required("please enter your email").email("please enter valid email"),
-      password: yup.string().min(6, "your password to short").required("plaese enter password"),
-    });
+    let schemaobj, initValues;
+
+    if(login === 'Login'){
+      schemaobj = {
+        email: yup.string().required("please enter your email").email("please enter valid email"),
+        password: yup.string().min(6, "your password to short").required("plaese enter password")
+      }
+      initValues = {
+        email: '',
+        password: ''
+      }
+    }else if(login === 'signup'){
+      schemaobj = {
+        name : yup.string().required("please enter your name"),
+        email: yup.string().required("please enter your email").email("please enter valid email"),
+        password: yup.string().min(6, "your password to short").required("plaese enter password")
+      }
+      initValues = {
+        name :'',
+        email: '',
+        password: ''
+      }
+    }
+
+    let schema = yup.object().shape(schemaobj);
 
       const formikobj = useFormik({
-        initialValues: {
-          email: '',
-          password: ''
-        },
+        initialValues: initValues,
         validationSchema : schema,
         onSubmit: values => {
           alert(JSON.stringify(values, null, 2));
         },
       });
 
-      const{ handleChange, handleSubmit, errors} = formikobj
+      const{ handleChange, handleSubmit, errors, handleBlur, touched} = formikobj
 
 
     return (
@@ -59,15 +77,17 @@ function Login(props) {
                         null 
                         :
                         <div className="form-outline mb-4">
-                      <input  type="name" id="form2Example11" className="form-control" name='name' placeholder=" Name" />
+                      <input  type="name" id="form2Example11" className="form-control" name='name' placeholder=" Name" onChange={handleChange} onBlur={handleBlur} />
+                      <p className='text-danger'>{errors.name && touched.name ? errors.name : ''}</p>
                     </div>
                     }
                     
                        
                         <div className="form-outline mb-4">
-                      <input  type="email" id="form2Example11" name='email' className="form-control" onChange={handleChange} placeholder=" email address" />
+                      <input  type="email" id="form2Example11" name='email' className="form-control" onChange={handleChange} onBlur={handleBlur} placeholder=" email address" />
+                      <p className='text-danger'>{errors.email && touched.email ? errors.email : ''}</p>
                     </div>
-                    <p style={{color:'red'}}>{errors.email}</p>
+                   
                     
                   
                     {
@@ -75,8 +95,8 @@ function Login(props) {
                       null
                       :
                       <div className="form-outline mb-4">
-                      <input type="password" id="form2Example22" className="form-control" name='password' onChange={handleChange} placeholder="password" />
-                      <p  style={{color:'red'}}>{errors.password}</p>
+                      <input type="password" id="form2Example22" className="form-control" name='password' onChange={handleChange} onBlur={handleBlur} placeholder="password" />
+                      <p className='text-danger'>{errors.password && touched.password ? errors.password : ''}</p>
                     </div>
                     }
                    
@@ -84,7 +104,7 @@ function Login(props) {
                     {
                         reset ?
                         <div className="text-center pt-1 pb-1">
-                      <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">done</button>
+                      <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">done</button>
                     </div>
                     :
                         login === "Login" ?
@@ -93,7 +113,7 @@ function Login(props) {
                     </div>
                     :
                     <div className="text-center pt-1 pb-1">
-                      <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">signup</button>
+                      <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">signup</button>
                     </div>
                     }
                     

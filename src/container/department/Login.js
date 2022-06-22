@@ -18,12 +18,13 @@ function Login(props) {
           password: ''
         },
         validationSchema : schema,
-        onSubmit: values => {
+        onSubmit: (values, action) => {
           alert(JSON.stringify(values, null, 2));
+          action.resetForm()
         },
       });
 
-      const{ handleChange, handleSubmit, errors} = formikobj
+      const{ handleChange, handleSubmit, handleBlur, errors, touched, values} = formikobj
 
 
     return (
@@ -65,9 +66,9 @@ function Login(props) {
                     
                        
                         <div className="form-outline mb-4">
-                      <input  type="email" id="form2Example11" name='email' className="form-control" onChange={handleChange} placeholder=" email address" />
+                      <input  type="email" id="form2Example11" name='email' className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.email} placeholder=" email address" />
                     </div>
-                    <p style={{color:'red'}}>{errors.email}</p>
+                    <p style={{color:'red'}}>{errors.email && touched.email ? errors.email : ''}</p>
                     
                   
                     {
@@ -75,8 +76,8 @@ function Login(props) {
                       null
                       :
                       <div className="form-outline mb-4">
-                      <input type="password" id="form2Example22" className="form-control" name='password' onChange={handleChange} placeholder="password" />
-                      <p  style={{color:'red'}}>{errors.password}</p>
+                      <input type="password" id="form2Example22" className="form-control" name='password' onChange={handleChange} onBlur={handleBlur} value={values.password} placeholder="password" />
+                      <p  style={{color:'red'}}>{errors.password && errors.password ? errors.password : ''}</p>
                     </div>
                     }
                    

@@ -36,12 +36,14 @@ function Login(props) {
       const formikobj = useFormik({
         initialValues: initValues,
         validationSchema : schema,
-        onSubmit: values => {
+        enableReinitialize:true,
+        onSubmit: (values, action) => {
           alert(JSON.stringify(values, null, 2));
+          action.resetForm()
         },
       });
 
-      const{ handleChange, handleSubmit, errors, handleBlur, touched} = formikobj
+      const{ handleChange, handleSubmit, errors, handleBlur, touched, values} = formikobj
 
 
     return (
@@ -77,25 +79,22 @@ function Login(props) {
                         null 
                         :
                         <div className="form-outline mb-4">
-                      <input  type="name" id="form2Example11" className="form-control" name='name' placeholder=" Name" onChange={handleChange} onBlur={handleBlur} />
+                      <input  type="name" id="form2Example11" className="form-control" name='name' placeholder=" Name" onChange={handleChange} onBlur={handleBlur} value={values.name}/>
                       <p className='text-danger'>{errors.name && touched.name ? errors.name : ''}</p>
                     </div>
                     }
                     
                        
                         <div className="form-outline mb-4">
-                      <input  type="email" id="form2Example11" name='email' className="form-control" onChange={handleChange} onBlur={handleBlur} placeholder=" email address" />
+                      <input  type="email" id="form2Example11" name='email' className="form-control" onChange={handleChange} onBlur={handleBlur} placeholder=" email address" value={values.email} />
                       <p className='text-danger'>{errors.email && touched.email ? errors.email : ''}</p>
-                    </div>
-                   
-                    
-                  
+                    </div>                                                  
                     {
                       reset ?
                       null
                       :
                       <div className="form-outline mb-4">
-                      <input type="password" id="form2Example22" className="form-control" name='password' onChange={handleChange} onBlur={handleBlur} placeholder="password" />
+                      <input type="password" id="form2Example22" className="form-control" name='password' onChange={handleChange} onBlur={handleBlur} placeholder="password"  value={values.password} />
                       <p className='text-danger'>{errors.password && touched.password ? errors.password : ''}</p>
                     </div>
                     }

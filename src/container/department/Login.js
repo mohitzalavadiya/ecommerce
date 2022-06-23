@@ -9,7 +9,7 @@ function Login(props) {
 
     let schemaobj, initValues;
 
-    if(login === 'Login'){
+    if(login === 'Login' && !reset){
       schemaobj = {
         email: yup.string().required("please enter your email").email("please enter valid email"),
         password: yup.string().min(6, "your password to short").required("plaese enter password")
@@ -18,7 +18,7 @@ function Login(props) {
         email: '',
         password: ''
       }
-    }else if(login === 'signup'){
+    }else if(login === 'signup'  && !reset){
       schemaobj = {
         name : yup.string().required("please enter your name"),
         email: yup.string().required("please enter your email").email("please enter valid email"),
@@ -28,6 +28,13 @@ function Login(props) {
         name :'',
         email: '',
         password: ''
+      }
+    }else{
+      schemaobj = {
+        email: yup.string().required("please enter your email").email("please enter valid email")
+      }
+      initValues = {
+        email: ''
       }
     }
 

@@ -38,6 +38,19 @@ function Login(props) {
       }
     }
 
+  const  LocalStor = (values) => {
+
+    const localdata = JSON.parse(localStorage.getItem('user'))
+
+    if(localdata === null){
+      localStorage.setItem('user', JSON.stringify([values]))
+    }else{
+      localdata.push(values)
+      localStorage.setItem('user', JSON.stringify(localdata))
+    }
+    }
+
+
     let schema = yup.object().shape(schemaobj);
 
       const formikobj = useFormik({
@@ -47,6 +60,7 @@ function Login(props) {
         onSubmit: (values, action) => {
           alert(JSON.stringify(values, null, 2));
           action.resetForm()
+          LocalStor(values);
         },
       });
 

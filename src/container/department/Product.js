@@ -62,7 +62,7 @@ function Product(props) {
                                     </div>
                                 </div>
                                 <div className="img-box">
-                                    <img src="images/p2.png" alt />
+                                    <img src="images/p2.png" alt  />
                                 </div>
                                 <div className="detail-box">
                                     <h5>

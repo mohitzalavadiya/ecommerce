@@ -1,10 +1,76 @@
-import React, { useState } from 'react';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
+import React, { useRef, useState } from 'react';
+import * as yup from 'yup';
+import { Formik, useFormik, Form } from 'formik';
 
 function Login(props) {
 
     const [login, setLogin] =useState("Login")
     const [reset, setReset] = useState(false)
+
+    let schemaobj, initValues;
+
+    if(login === 'Login' && !reset){
+      schemaobj = {
+        email: yup.string().required("please enter your email").email("please enter valid email"),
+        password: yup.string().min(6, "your password to short").required("plaese enter password")
+      }
+      initValues = {
+        email: '',
+        password: ''
+      }
+    }else if(login === 'signup'  && !reset){
+      schemaobj = {
+        name : yup.string().required("please enter your name"),
+        email: yup.string().required("please enter your email").email("please enter valid email"),
+        password: yup.string().min(6, "your password to short").required("plaese enter password")
+      }
+      initValues = {
+        name :'',
+        email: '',
+        password: ''
+      }
+    }else{
+      schemaobj = {
+        email: yup.string().required("please enter your email").email("please enter valid email")
+      }
+      initValues = {
+        email: ''
+      }
+    }
+
+  const  LocalStor = (values) => {
+
+    const localdata = JSON.parse(localStorage.getItem('user'))
+
+    if(localdata === null){
+      localStorage.setItem('user', JSON.stringify([values]))
+    }else{
+      localdata.push(values)
+      localStorage.setItem('user', JSON.stringify(localdata))
+    }
+    }
+    const searchdata = () => {
+      localStorage.setItem('user', 1234)
+  }
+
+    let schema = yup.object().shape(schemaobj);
+
+      const formikobj = useFormik({
+        initialValues: initValues,
+        validationSchema : schema,
+        enableReinitialize:true,
+        onSubmit: (values, action) => {
+          action.resetForm()
+          LocalStor(values);
+          if(login === 'Login'){
+            searchdata()
+          }
+        },
+      });
+
+      const{ handleChange, handleSubmit, errors, handleBlur, touched, values} = formikobj
+
+
     return (
        <div>
   <section className="h-100 gradient-form" style={{backgroundColor: '#eee'}}>
@@ -28,7 +94,8 @@ function Login(props) {
                     }
                    
                   </div>
-                  <form>
+                  <Formik values={formikobj}>
+                  <Form onSubmit={handleSubmit}>
                     {
                         reset ?
                         null
@@ -37,39 +104,40 @@ function Login(props) {
                         null 
                         :
                         <div className="form-outline mb-4">
-                      <input type="name" id="form2Example11" className="form-control" placeholder=" Name" />
+                      <input  type="name" id="form2Example11" className="form-control" name='name' placeholder=" Name" onChange={handleChange} onBlur={handleBlur} value={values.name}/>
+                      <p className='text-danger'>{errors.name && touched.name ? errors.name : ''}</p>
                     </div>
                     }
-                    {
-                        reset ?
-                        <div className="form-outline mb-4">
-                      <input type="email" id="form2Example11" className="form-control" placeholder=" email address" />
-                    </div>
-                    :
-                    <>
                     
-                    <div className="form-outline mb-4">
-                    <input type="email" id="form2Example11" className="form-control" placeholder=" email address" />
-                  </div>
-                  <div className="form-outline mb-4">
-                    <input type="password" id="form2Example22" className="form-control" placeholder="password" />
-                  </div>
-                  </>
+                       
+                        <div className="form-outline mb-4">
+                      <input  type="email" id="form2Example11" name='email' className="form-control" onChange={handleChange} onBlur={handleBlur} placeholder=" email address" value={values.email} />
+                      <p className='text-danger'>{errors.email && touched.email ? errors.email : ''}</p>
+                    </div>                                                  
+                    {
+                      reset ?
+                      null
+                      :
+                      <div className="form-outline mb-4">
+                      <input type="password" id="form2Example22" className="form-control" name='password' onChange={handleChange} onBlur={handleBlur} placeholder="password"  value={values.password} />
+                      <p className='text-danger'>{errors.password && touched.password ? errors.password : ''}</p>
+                    </div>
                     }
+                   
                     
                     {
                         reset ?
                         <div className="text-center pt-1 pb-1">
-                      <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">done</button>
+                      <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">done</button>
                     </div>
                     :
                         login === "Login" ?
                         <div className="text-center pt-1 pb-1">
-                      <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">login</button>
+                      <button  className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">login</button>
                     </div>
                     :
                     <div className="text-center pt-1 pb-1">
-                      <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">signup</button>
+                      <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">signup</button>
                     </div>
                     }
                     
@@ -88,7 +156,9 @@ function Login(props) {
                     </div>
                     }
                     
-                  </form>
+                  </Form>
+                 </Formik>
+                  
                 </div>
               </div>
             </div>

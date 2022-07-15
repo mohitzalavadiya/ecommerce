@@ -10,6 +10,8 @@ import Product from './container/department/Product';
 import Testimonial from './container/department/Testimonial';
 import Login from './container/department/Login';
 import Data from './container/data/Data';
+import PublicRoute from './container/public-route/Public';
+import PrivateRoute from './container/private-route/Private';
 
 function App() {
   return (
@@ -17,14 +19,14 @@ function App() {
 
     <Header/>
       <Switch>
-      <Route path="/" exact component={Home}/>
-      <Route path="/about" exact component={About} />
-      <Route path="/blog" exact component={Blog}/>
-      <Route path="/contact" exact component={Contact}/>
-      <Route path="/product" exact component={Product}/>
-      <Route path="/testimonial" exact component={Testimonial}/>
-      <Route path="/login" exact component={Login}/>
-      <Route path="/data" exact component={Data}/>
+      <PublicRoute path="/" exact component={Home}/>
+      <PublicRoute path="/about" exact component={About} />
+      <PublicRoute path="/blog" exact component={Blog}/>
+      <PublicRoute path="/contact" exact component={Contact}/>
+      <PublicRoute path="/product" exact component={Product}/>
+      <PublicRoute path="/testimonial" exact component={Testimonial}/>
+      <PublicRoute path="/login" restricted exact component={Login}/>
+      <PrivateRoute path="/data" exact component={Data}/>
 
       </Switch>
     <Footer/>

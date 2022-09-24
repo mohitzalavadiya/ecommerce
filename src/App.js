@@ -12,11 +12,16 @@ import Login from './container/department/Login';
 import Data from './container/data/Data';
 import PublicRoute from './container/public-route/Public';
 import PrivateRoute from './container/private-route/Private';
+import { Provider } from 'react-redux';
+import store, { persistor } from './redux/Store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { SnackbarProvider } from 'notistack';
 
 function App() {
   return (
-    <div>
-
+    <Provider store={store}>
+      <SnackbarProvider maxSnack={3}>
+      <PersistGate loading={null} persistor={persistor}>
     <Header/>
       <Switch>
       <PublicRoute path="/" exact component={Home}/>
@@ -27,10 +32,13 @@ function App() {
       <PublicRoute path="/testimonial" exact component={Testimonial}/>
       <PublicRoute path="/login" restricted exact component={Login}/>
       <PrivateRoute path="/data" exact component={Data}/>
+      {/* <PrivateRoute path="/admin" exact component={Admin}/> */}
 
       </Switch>
     <Footer/>
-    </div>
+    </PersistGate>
+    </SnackbarProvider>
+    </Provider>
     
   );
 }

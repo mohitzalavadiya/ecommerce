@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { logoutAction } from '../redux/action/AuthAction';
+import Alert from './Alert';
 
-function Header(props) {
+function Header(props) { 
+    const dispatch = useDispatch()
+    const auth = useSelector((state) => state.Auth)
+
+    const handleLogout = () => {
+        dispatch(logoutAction())
+    }
     return (
+        <>
         <header className="header_section">
             <div className="container">
                 <nav className="navbar navbar-expand-lg custom_nav-container ">
@@ -31,13 +41,28 @@ function Header(props) {
                                 <NavLink className="nav-link" to={"/blog"}>Blog</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to={"/login"}>Login</NavLink>
+                                {
+                                    auth.data === null ? (
+                                        <NavLink className="nav-link" to={"/login"}>Login</NavLink>
+                                    ) : (
+                                        <button
+                                        className="nav-link"
+                                        onClick={handleLogout}
+                                      >
+                                        Log Out
+                                      </button>
+                                    )
+                                }
+                               
                             </li>
                             <li className="nav-item">
                                 <NavLink className="nav-link" to={"/data"}>Data</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink className="nav-link" to={"/contact"}>Contact</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to={"/admin"}>Admin</NavLink>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">
@@ -95,6 +120,7 @@ function Header(props) {
                                     </svg>
                                 </a>
                             </li>
+                            {/* <Alert/> */}
                             <form className="form-inline">
                                 <button className="btn  my-2 my-sm-0 nav_search-btn" type="submit">
                                     <i className="fa fa-search" aria-hidden="true" />
@@ -105,7 +131,8 @@ function Header(props) {
                 </nav>
             </div>
         </header>
-
+        <Alert/>
+        </>
     );
 }
 

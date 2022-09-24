@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import * as yup from 'yup';
 import { Formik, useFormik, Form } from 'formik';
+import {useDispatch} from 'react-redux'
+import { GoogleAction, LoginAction, SignupAction } from '../../redux/action/AuthAction';
 
 function Login(props) {
 
@@ -49,10 +51,10 @@ function Login(props) {
       localStorage.setItem('user', JSON.stringify(localdata))
     }
     }
-    const searchdata = () => {
-      localStorage.setItem('user', 1234)
-  }
-
+  //   const searchdata = () => {
+  //     localStorage.setItem('user', 1234)
+  // }
+ const dispatch = useDispatch()
     let schema = yup.object().shape(schemaobj);
 
       const formikobj = useFormik({
@@ -62,14 +64,18 @@ function Login(props) {
         onSubmit: (values, action) => {
           action.resetForm()
           LocalStor(values);
-          if(login === 'Login'){
-            searchdata()
+          if(login === 'signup'){
+            dispatch(SignupAction(values))
+          }else if(login === 'Login'){
+            dispatch(LoginAction(values))
           }
         },
       });
 
       const{ handleChange, handleSubmit, errors, handleBlur, touched, values} = formikobj
-
+      const handleGoogle = () => {
+        dispatch(GoogleAction())
+      }
 
     return (
        <div>
@@ -143,6 +149,8 @@ function Login(props) {
                     
                     
                     <button  type="button" className='border-0 '   onClick={() => {setReset(true)}} >Forgot password?</button>
+
+                    <button onClick={handleGoogle}>Google</button>
                     {
                         login === "Login" ?     
                         <div className="d-flex align-items-center justify-content-center pb-4">

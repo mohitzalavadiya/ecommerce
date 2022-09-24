@@ -157,6 +157,8 @@ a:focus {
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
     font-weight: 700;
+    border: none;
+    background-color: transparent;
 }
 
 .custom_nav-container .navbar-nav .nav-item .nav-link svg {

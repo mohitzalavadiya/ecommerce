@@ -14,8 +14,8 @@ function Header(props) {
     return (
         <>
         <header className="header_section">
-            <div className="container">
-                <nav className="navbar navbar-expand-lg custom_nav-container ">
+            {/* <div className="container"> */}
+                <nav className="navbar navbar-expand-lg custom_nav-container nav-pad">
                     <a className="navbar-brand" href="index.html"><img width={250} src="images/logo.png" alt="#" /></a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className> </span>
@@ -129,7 +129,7 @@ function Header(props) {
                         </ul>
                     </div>
                 </nav>
-            </div>
+            {/* </div> */}
         </header>
         <Alert/>
         </>

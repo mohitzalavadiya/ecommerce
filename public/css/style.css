@@ -9,7 +9,10 @@ body {
   background-color: #ffffff;
   overflow-x: hidden;
 }
-
+.nav-pad{
+  padding-left: 60px !important;
+  padding-right: 60px !important;
+}
 .layout_padding {
   padding: 70px 0;
 }

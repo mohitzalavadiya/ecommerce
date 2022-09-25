@@ -12,6 +12,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { useDispatch, useSelector } from 'react-redux';
+import { addDataAction } from '../../redux/action/AdminAction';
 
 function Admin(props) {
 
@@ -20,6 +22,7 @@ function Admin(props) {
     const [deldata, setDeldata] = useState([]);
     const [alertopen, setAlertOpen] = React.useState(false);
     const [update, setUpdate] = useState(false)
+    const dispatch = useDispatch()
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -148,8 +151,9 @@ function Admin(props) {
         },
 
     ];
+    const admin = useSelector((state)=> state.admin)
     useEffect(() => {
-        loaddata()
+       dispatch(addDataAction())
     }, [])
 
     return (
